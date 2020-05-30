@@ -72,7 +72,7 @@
 
 ### 服务器
 
-![image-20200529105910705](img/image-20200529105910705.png)
+![image-20200529105910705](https://github.com/chenyc4/EOI/tree/master/img/image-20200529105910705.png)
 
 ### 客户端
 
