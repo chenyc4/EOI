@@ -1,0 +1,450 @@
+# 鎱㈡煡璇㈡棩蹇楁杩?
+鎵€璋撴參鏌ヨ鏃ュ織锛屽氨鏄敤浜庤褰昅ySQL涓搷搴旀椂闂磋秴杩囪瀹氶槇鍊肩殑SQL璇彞锛岄€氳繃鎵撳紑鎱㈡煡璇㈠紑鍏筹紝MySQL浼氬皢澶т簬闃堝€肩殑SQL璁板綍鍦ㄦ棩蹇椾腑锛屼互渚夸簬鍒嗘瀽鎬ц兘銆?
+
+鎱㈡煡璇㈡棩蹇楅€夐」榛樿鏄叧闂殑锛屽鏋滆寮€鍚紝鍒欓渶瑕佹墜鍔ㄨ缃€?
+鎱㈡煡璇㈡棩蹇楅€夐」涓嶅缓璁竴鐩村紑鍚紝鍥犱负璁板綍鏃ュ織鎰忓懗鐫€IO鎿嶄綔锛屾湰韬鎬ц兘鏈変竴瀹氱殑褰卞搷锛屽洜姝わ紝寤鸿鍦ㄧ敓浜х幆澧冨叧闂閫夐」锛涜€屽湪寮€鍙戠幆澧冭皟浼橀樁娈靛彲浠ラ€傚綋鎵撳紑璇ラ€夐」銆?
+妫€鏌ユ槸鍚﹀紑鍚簡鎱㈡煡璇㈡棩蹇楋細
+
+```sql
+mysql> show variables like '%slow_query_log%';
++---------------------+-----------------------------------------+
+| Variable_name       | Value                                   |
++---------------------+-----------------------------------------+
+| slow_query_log      | OFF                                     |
+| slow_query_log_file | /var/lib/mysql/DESKTOP-Q5J25HR-slow.log |
++---------------------+-----------------------------------------+
+2 rows in set (0.03 sec)
+```
+`slow_query_log`閫夐」鍗冲紑鍚參鏌ヨ鐨勫紑鍏筹紝`OFF`涓哄叧闂紝`ON`涓哄紑鍚€?
+`slow_query_log_file`鍗虫參鏌ヨ鏃ュ織鐨勫悕绉般€?
+
+濡傛灉瑕佸紑鍚參鏌ヨ鏃ュ織锛屽垯鎵ц濡備笅璇彞锛?
+```sql
+set global slow_query_log = ON;
+/* 鎴栬€?*/
+set global slow_query_log = 1;
+```
+浠ヤ笂涓ゅ彞璇濇槸涓€涓剰鎬濓紝鎵ц浠绘剰涓€鏉￠兘鍙互銆傛墽琛屽畬姣曪紝鍐嶆鏌ヨ锛屽凡缁忔墦寮€銆?
+```sql
+mysql> set global slow_query_log = ON;
+Query OK, 0 rows affected (0.05 sec)
+
+mysql> show variables like '%slow_query_log%';
++---------------------+-----------------------------------------+
+| Variable_name       | Value                                   |
++---------------------+-----------------------------------------+
+| slow_query_log      | ON                                      |
+| slow_query_log_file | /var/lib/mysql/DESKTOP-Q5J25HR-slow.log |
++---------------------+-----------------------------------------+
+2 rows in set (0.00 sec)
+```
+鍚屾牱鐨勶紝鎱㈡煡璇㈡棩蹇楃殑鏂囦欢鍚嶄篃鍙互閲嶆柊鎸囧畾锛屽彧闇€瑕佽缃甡set global slow_query_log_file = 鏂囦欢鍚峘鍗冲彲銆?
+
+鍓嶉潰璇磋繃锛屾參鏌ヨ鏃ュ織鍙湁褰揝QL璇彞鍝嶅簲鏃堕棿瓒呰繃涓€瀹氶槇鍊兼墠浼氳褰曞湪鏃ュ織涓紝閭ｄ箞杩欎釜闃堝€兼槸澶氬皯锛岃濡備綍璁剧疆鍛紵
+鍙€氳繃浠ヤ笅鍛戒护鏌ョ湅鎱㈡煡璇㈡棩蹇楃殑闃堝€硷細
+```sql
+mysql> show variables like '%long_query_time%';
++-----------------+-----------+
+| Variable_name   | Value     |
++-----------------+-----------+
+| long_query_time | 10.000000 |
++-----------------+-----------+
+1 row in set (0.00 sec)
+```
+鍙互鐪嬪埌锛岄粯璁ょ殑闃堝€兼槸10绉掞紝璇ュ€煎悓鏍峰彲浠ラ€氳繃璁剧疆鏉ヤ慨鏀癸紝濡傝缃负0.1绉掞細
+```sql
+set global long_query_time = 0.1;
+```
+`long_query_time`璁剧疆瀹屾垚鍚庯紝闇€瑕侀€€鍑篗ySQL瀹㈡埛绔紝閲嶆柊鐧诲綍鍚庢墠鐢熸晥锛屼簬鏄彲浠ョ湅鍒拌鍊煎凡缁忓彉鎴愪簡0.1锛?
+```sql
+mysql> show variables like '%long_query_time%';
++-----------------+----------+
+| Variable_name   | Value    |
++-----------------+----------+
+| long_query_time | 0.100000 |
++-----------------+----------+
+1 row in set (0.01 sec)
+```
+# 鎱㈡煡璇㈡棩蹇楀叿浣撴渚?
+鎺ヤ笅鏉ラ€氳繃妗堜緥鐨勬柟寮忔潵婕旂ず鎱㈡煡璇㈡棩蹇楋細
+鎴戝湪褰撳墠鏁版嵁搴撻噷鏈変竴寮爐est01琛紝琛ㄧ粨鏋勫涓嬫墍绀猴細
+```sql
+mysql> desc test01;
++--------+-------------+------+-----+---------+-------+
+| Field  | Type        | Null | Key | Default | Extra |
++--------+-------------+------+-----+---------+-------+
+| id     | int(4)      | YES  | MUL | NULL    |       |
+| name   | varchar(20) | YES  |     | NULL    |       |
+| passwd | char(20)    | YES  |     | NULL    |       |
+| inf    | char(50)    | YES  |     | NULL    |       |
++--------+-------------+------+-----+---------+-------+
+4 rows in set (0.04 sec)
+```
+鍒嗗埆鍋氬涓嬫煡璇細
+```sql
+select * from test01;
+select sleep(1);
+select id, sleep(2) from test01;
+```
+鎵ц缁撴灉濡備笅鎵€绀猴細
+```sql
+mysql> select * from test01;
++------+------+--------+--------+
+| id   | name | passwd | inf    |
++------+------+--------+--------+
+|    1 | zz   | 123456 | asdfgh |
++------+------+--------+--------+
+1 row in set (0.00 sec)
+
+mysql> select sleep(1);
++----------+
+| sleep(1) |
++----------+
+|        0 |
++----------+
+1 row in set (1.00 sec)
+
+mysql> select id, sleep(2) from test01;
++------+----------+
+| id   | sleep(2) |
++------+----------+
+|    1 |        0 |
++------+----------+
+1 row in set (2.00 sec)
+```
+姝ゆ椂骞堕渶瑕佸幓涓嶅叧蹇僑QL鏈韩锛岃€屾槸鐪嬭繖涓夋潯SQL鎵ц鐨勬椂闂达紝浠庝笂闈㈠彲浠ョ湅鍒帮紝绗竴鏉QL鎵ц鍑犱箮涓嶈€楁椂闂达紝鏄剧ず`0.00 sec`锛岀浜屾潯SQL鏄剧ず鏃堕棿涓?`1.00 sec`锛岀涓夋潯SQL涓?`2.00 sec`銆?
+鍥犱负鎴戜滑璁剧疆浜嗛槇鍊间负0.1绉掞紝鍥犳鍚庝袱鏉QL搴旇閮借璁板綍鍦ㄦ參鏌ヨ鏃ュ織涓紝鎺ヤ笅鏉ラ獙璇佹槸鍚﹀姝わ細
+閫氳繃濡備笅鍛戒护锛屽彲鏌ョ湅鎱㈡煡璇QL鐨勬潯鏁帮細
+```sql
+mysql> show global status like '%slow_queries%';
++---------------+-------+
+| Variable_name | Value |
++---------------+-------+
+| Slow_queries  | 2     |
++---------------+-------+
+1 row in set (0.02 sec)
+```
+鏄剧ず璁板綍涓?鏉★紝涓庡疄闄呮儏鍐典竴鑷淬€?
+閫氳繃`show variables like '%slow_query_log%'`鍛戒护锛屽彲浠ユ煡鐪嬪埌鏃ュ織鐨勫叿浣撹矾寰勩€?
+```sql
+mysql> show variables like '%slow_query_log%';
++---------------------+-----------------------------------------+
+| Variable_name       | Value                                   |
++---------------------+-----------------------------------------+
+| slow_query_log      | ON                                      |
+| slow_query_log_file | /var/lib/mysql/DESKTOP-Q5J25HR-slow.log |
++---------------------+-----------------------------------------+
+2 rows in set (0.00 sec)
+```
+鎵撳紑`/var/lib/mysql/DESKTOP-Q5J25HR-slow.log`锛屽彲浠ョ湅鍒版棩蹇楀綋涓褰曚簡鏃堕棿瓒呰繃闃堝€肩殑閭ｄ袱鏉QL璇彞锛?
+```bash
+/usr/sbin/mysqld, Version: 5.7.29-0ubuntu0.18.04.1 ((Ubuntu)). started with:
+Tcp port: 3306  Unix socket: /var/run/mysqld/mysqld.sock
+Time                 Id Command    Argument
+/usr/sbin/mysqld, Version: 5.7.29-0ubuntu0.18.04.1 ((Ubuntu)). started with:
+Tcp port: 3306  Unix socket: /var/run/mysqld/mysqld.sock
+Time                 Id Command    Argument
+# Time: 2020-03-31T13:41:25.726554Z
+# User@Host: root[root] @ localhost []  Id:     6
+# Query_time: 1.000644  Lock_time: 0.000000 Rows_sent: 1  Rows_examined: 0
+use testDB;
+SET timestamp=1585662085;
+select sleep(1);
+# Time: 2020-03-31T13:41:34.246770Z
+# User@Host: root[root] @ localhost []  Id:     6
+# Query_time: 2.000536  Lock_time: 0.000057 Rows_sent: 1  Rows_examined: 1
+SET timestamp=1585662094;
+select id, sleep(2) from test01;
+```
+
+# mysqldumpslow宸ュ叿
+浠ヤ笂浠嬬粛鐨勬柟娉曡櫧鐒跺彲浠ユ煡鐪嬪嚭鎵€鏈夋參SQL璇彞锛屼絾鏄剧劧閮借褰曞湪涓€涓棩蹇楁枃浠堕噷锛屼細鏄惧緱寰堜贡锛岃€屼笖涓€鏃QL姣旇緝澶氾紝瀹氫綅璧锋潵杩樻槸姣旇緝楹荤儲鐨勩€?
+濂藉湪MySQL鏈韩鎻愪緵浜嗕竴涓笓闂ㄧ敤鏉ユ煡鐪嬫參鏌ヨ鏃ュ織鐨勫伐鍏凤紝鍗砿ysqldumpslow銆?
+鍙€氳繃`MySQLdumpslow -help`鏌ョ湅鍏蜂綋浣跨敤鏂规硶锛?
+```bash
+chenyc@DESKTOP-Q5J25HR:~$ mysqldumpslow -help
+Usage: mysqldumpslow [ OPTS... ] [ LOGS... ]
+
+Parse and summarize the MySQL slow query log. Options are
+
+  --verbose    verbose
+  --debug      debug
+  --help       write this text to standard output
+
+  -v           verbose
+  -d           debug
+  -s ORDER     what to sort by (al, at, ar, c, l, r, t), 'at' is default
+                al: average lock time
+                ar: average rows sent
+                at: average query time
+                 c: count
+                 l: lock time
+                 r: rows sent
+                 t: query time
+  -r           reverse the sort order (largest last instead of first)
+  -t NUM       just show the top n queries
+  -a           don't abstract all numbers to N and strings to 'S'
+  -n NUM       abstract numbers with at least n digits within names
+  -g PATTERN   grep: only consider stmts that include this string
+  -h HOSTNAME  hostname of db server for *-slow.log filename (can be wildcard),
+               default is '*', i.e. match all
+  -i NAME      name of server instance (if using mysql.server startup script)
+  -l           don't subtract lock time from total time
+```
+浠庝互涓婃枃浠朵腑锛屽彲浠ョ煡閬擄紝璇ュ伐鍏风敤娉曞涓嬶細
+```
+mysqldumpslow [閫夐」] [鏃ュ織鍚峕
+```
+甯哥敤閫夐」璇存槑锛?
+- -s 鍗硂rder鎺掑簭,鍚庨潰鍙互鏈変互涓嬮€夐」锛?
+	- al 骞冲潎閿佸畾鏃堕棿
+	- ar 骞冲潎杩斿洖璁板綍鏃堕棿
+	- at 骞冲潎鏌ヨ鏃堕棿
+	- c 璁℃暟
+	- l 閿佸畾鏃堕棿
+	- r 閫嗗簭鎺掑簭
+	- t 鏌ヨ鏃堕棿
+- -t锛岀浉褰撲簬top n锛屽嵆杩斿洖鍓嶉潰n鏉¤鍙?
+- -g锛?鍖归厤姝ｅ垯琛ㄨ揪寮忥紝澶у皬鍐欎笉鏁忔劅
+濡傦細
+```bash
+sudo mysqldumpslow -s r -t 3 -g 'select' /var/lib/mysql/DESKTOP-Q5J25HR-slow.log
+```
+浠ヤ笂鍛戒护琛ㄧず锛氳繑鍥炴寜閫嗗簭鎺掑簭鐨勫叾涓笁鏉¤鍙ワ紝涓旇鍙ヤ腑鍖呭惈`select`鐨凷QL璇彞銆?
+缁撴灉濡備笅鎵€绀猴細
+```bash
+chenyc@DESKTOP-Q5J25HR:~$ sudo mysqldumpslow -s r -t 3 -g 'select' /var/lib/mysql/DESKTOP-Q5J25HR-slow.log
+
+Reading mysql slow query log from /var/lib/mysql/DESKTOP-Q5J25HR-slow.log
+Count: 1  Time=2.00s (2s)  Lock=0.00s (0s)  Rows=1.0 (1), root[root]@localhost
+  select id, sleep(N) from test01
+
+Count: 1  Time=1.00s (1s)  Lock=0.00s (0s)  Rows=1.0 (1), root[root]@localhost
+  select sleep(N)
+
+Died at /usr/bin/mysqldumpslow line 167, <> chunk 2.
+```
+
+# Profiles宸ュ叿
+profiles鏈€澶х殑浣滅敤鏄敤鏉ュ垎鏋愭捣閲忔暟鎹紝璇ュ懡浠や細璁板綍鎵€鏈夋墽琛岃繃鐨凷QL璇彞銆?
+杩欎釜閫夐」榛樿涔熸槸鍏抽棴鐨勶紝闇€瑕佹墜鍔ㄦ墦寮€銆?
+鏌ヨ`profiles`閫夐」鍛戒护锛?
+```sql
+mysql> show variables like '%profiling%';
++------------------------+-------+
+| Variable_name          | Value |
++------------------------+-------+
+| have_profiling         | YES   |
+| profiling              | OFF   |
+| profiling_history_size | 15    |
++------------------------+-------+
+3 rows in set (0.01 sec)
+```
+鎵撳紑鍛戒护锛?
+```sql
+mysql> set profiling = ON;
+Query OK, 0 rows affected, 1 warning (0.00 sec)
+```
+鍐嶆鏌ョ湅锛屽彲浠ユ崲涓€绉嶆柟寮忔煡鐪嬶細
+```sql
+mysql> select @@profiling;
++-------------+
+| @@profiling |
++-------------+
+|           1 |
++-------------+
+1 row in set, 1 warning (0.00 sec)
+```
+浠ヤ笂閫夐」锛?浠ｈ〃鎵撳紑锛?浠ｈ〃鍏抽棴銆?
+涓轰簡鏇翠负鐩磋鐨勬煡鐪媝rofile锛屾垜浠啀鎵ц涓ゆ潯SQL锛?
+```sql
+mysql> select sleep(3);
++----------+
+| sleep(3) |
++----------+
+|        0 |
++----------+
+1 row in set (3.00 sec)
+
+mysql> select * from test01;
++------+------+--------+--------+
+| id   | name | passwd | inf    |
++------+------+--------+--------+
+|    1 | zz   | 123456 | asdfgh |
++------+------+--------+--------+
+1 row in set (0.00 sec)
+```
+濂戒簡锛屽噯澶囧伐浣滃氨鍒拌繖閲岋紝鐜板湪鏉ユ煡鐪媝rofile锛?
+```sql
+mysql> show profiles;
++----------+------------+-----------------------------------+
+| Query_ID | Duration   | Query                             |
++----------+------------+-----------------------------------+
+|        1 | 0.00214400 | show variables like '%profiling%' |
+|        2 | 0.00017400 | select @@profiling                |
+|        3 | 3.00062925 | select sleep(3)                   |
+|        4 | 0.00023450 | select * from test01              |
++----------+------------+-----------------------------------+
+4 rows in set, 1 warning (0.00 sec)
+```
+濡備笂鎵€绀猴紝瀹冧細璁板綍鎵€鏈夌殑璇彞锛屽叾涓浜屽垪`Duration`浠ｈ〃鐨勬槸鎵ц鏃堕棿銆?
+浠ヤ笂铏界劧鍙互鐪嬪埌姣忔潯SQL鐨勬墽琛屾椂闂达紝浣嗘垜浠棤娉曠簿纭煡閬撴湁澶氬皯鏃堕棿鑺辫垂鍦↖O涓婏紝澶氬皯鏃堕棿鑺辫垂鍦–PU涓婏紝鍥犳锛岃繕鍙娇鐢ㄤ互涓嬭鍙ユ煡鐪嬫洿涓虹簿纭殑鍐呭锛?
+```sql
+show profile all for query $(Query_ID);
+```
+涓婇潰鐨刞Query_ID`鍗砢show profiles`缁撴灉涓涓€鍒楃殑id缂栧彿銆傚锛?
+```sql
+mysql> show profile all for query 4;
++----------------------+----------+----------+------------+-------------------+---------------------+--------------+---------------+---------------+-------------------+-------------------+-------------------+-------+-----------------------+----------------------+-------------+
+| Status               | Duration | CPU_user | CPU_system | Context_voluntary | Context_involuntary | Block_ops_in | Block_ops_out | Messages_sent | Messages_received | Page_faults_major | Page_faults_minor | Swaps | Source_function       | Source_file
+    | Source_line |
++----------------------+----------+----------+------------+-------------------+---------------------+--------------+---------------+---------------+-------------------+-------------------+-------------------+-------+-----------------------+----------------------+-------------+
+| starting             | 0.000045 | 0.000000 |   0.000000 |                 0 |                   0 |            0 |
+0 |             0 |                 0 |                 0 |                 0 |     0 | NULL                  | NULL
+    |        NULL |
+| checking permissions | 0.000008 | 0.000000 |   0.000000 |                 0 |                   0 |            0 |
+0 |             0 |                 0 |                 0 |                 0 |     0 | check_access          | sql_authorization.cc |         809 |
+| Opening tables       | 0.000020 | 0.000000 |   0.000000 |                 0 |                   0 |            0 |
+0 |             0 |                 0 |                 0 |                 0 |     0 | open_tables           | sql_base.cc
+    |        5781 |
+| init                 | 0.000017 | 0.000000 |   0.000000 |                 0 |                   0 |            0 |
+0 |             0 |                 0 |                 0 |                 0 |     0 | handle_query          | sql_select.cc
+    |         128 |
+| System lock          | 0.000016 | 0.000000 |   0.000000 |                 0 |                   0 |            0 |
+0 |             0 |                 0 |                 0 |                 2 |     0 | mysql_lock_tables     | lock.cc
+    |         330 |
+| optimizing           | 0.000005 | 0.000000 |   0.000000 |                 0 |                   0 |            0 |
+0 |             0 |                 0 |                 0 |                 0 |     0 | optimize              | sql_optimizer.cc
+    |         158 |
+| statistics           | 0.000014 | 0.000000 |   0.000000 |                 0 |                   0 |            0 |
+0 |             0 |                 0 |                 0 |                 0 |     0 | optimize              | sql_optimizer.cc
+    |         374 |
+| preparing            | 0.000010 | 0.000000 |   0.000000 |                 0 |                   0 |            0 |
+0 |             0 |                 0 |                 0 |                 0 |     0 | optimize              | sql_optimizer.cc
+    |         482 |
+| executing            | 0.000004 | 0.000000 |   0.000000 |                 0 |                   0 |            0 |
+0 |             0 |                 0 |                 0 |                 0 |     0 | exec                  | sql_executor.cc
+    |         126 |
+| Sending data         | 0.000051 | 0.000000 |   0.000000 |                 0 |                   0 |            0 |
+0 |             0 |                 0 |                 0 |                 8 |     0 | exec                  | sql_executor.cc
+    |         202 |
+| end                  | 0.000005 | 0.000000 |   0.000000 |                 0 |                   0 |            0 |
+0 |             0 |                 0 |                 0 |                 0 |     0 | handle_query          | sql_select.cc
+    |         206 |
+| query end            | 0.000007 | 0.000000 |   0.000000 |                 0 |                   0 |            0 |
+0 |             0 |                 0 |                 0 |                 0 |     0 | mysql_execute_command | sql_parse.cc
+    |        4956 |
+| closing tables       | 0.000007 | 0.000000 |   0.000000 |                 0 |                   0 |            0 |
+0 |             0 |                 0 |                 0 |                 0 |     0 | mysql_execute_command | sql_parse.cc
+    |        5009 |
+| freeing items        | 0.000013 | 0.000000 |   0.000000 |                 0 |                   0 |            0 |
+0 |             0 |                 0 |                 0 |                 0 |     0 | mysql_parse           | sql_parse.cc
+    |        5622 |
+| cleaning up          | 0.000013 | 0.000000 |   0.000000 |                 0 |                   0 |            0 |
+0 |             0 |                 0 |                 0 |                 0 |     0 | dispatch_command      | sql_parse.cc
+    |        1931 |
++----------------------+----------+----------+------------+-------------------+---------------------+--------------+-------------
+--+---------------+-------------------+-------------------+-------------------+-------+-----------------------+------------------
+----+-------------+
+15 rows in set, 1 warning (0.00 sec)
+```
+涓婇潰鐨勭粨鏋滅敱浜庨€夐」澶锛岀湅璧锋潵杩樻槸鏈変簺涔憋紝鍏跺疄寰堝涓滆タ鎴戜滑骞朵笉鍏虫敞锛岃€屼富瑕佸彧鍏虫敞CPU鍜孖O鎯呭喌锛屽洜姝わ紝鍙互杩涗竴姝ョ畝鍖栧涓嬶細
+```sql
+mysql> show profile cpu, block io for query 4;
++----------------------+----------+----------+------------+--------------+---------------+
+| Status               | Duration | CPU_user | CPU_system | Block_ops_in | Block_ops_out |
++----------------------+----------+----------+------------+--------------+---------------+
+| starting             | 0.000045 | 0.000000 |   0.000000 |            0 |             0 |
+| checking permissions | 0.000008 | 0.000000 |   0.000000 |            0 |             0 |
+| Opening tables       | 0.000020 | 0.000000 |   0.000000 |            0 |             0 |
+| init                 | 0.000017 | 0.000000 |   0.000000 |            0 |             0 |
+| System lock          | 0.000016 | 0.000000 |   0.000000 |            0 |             0 |
+| optimizing           | 0.000005 | 0.000000 |   0.000000 |            0 |             0 |
+| statistics           | 0.000014 | 0.000000 |   0.000000 |            0 |             0 |
+| preparing            | 0.000010 | 0.000000 |   0.000000 |            0 |             0 |
+| executing            | 0.000004 | 0.000000 |   0.000000 |            0 |             0 |
+| Sending data         | 0.000051 | 0.000000 |   0.000000 |            0 |             0 |
+| end                  | 0.000005 | 0.000000 |   0.000000 |            0 |             0 |
+| query end            | 0.000007 | 0.000000 |   0.000000 |            0 |             0 |
+| closing tables       | 0.000007 | 0.000000 |   0.000000 |            0 |             0 |
+| freeing items        | 0.000013 | 0.000000 |   0.000000 |            0 |             0 |
+| cleaning up          | 0.000013 | 0.000000 |   0.000000 |            0 |             0 |
++----------------------+----------+----------+------------+--------------+---------------+
+15 rows in set, 1 warning (0.00 sec)
+```
+# 鍏ㄥ眬鏌ヨ鏃ュ織
+鍚宲rofiles涓€鏍凤紝鎵撳紑鍏ㄥ眬鏌ヨ鏃ュ織閫夐」浠ュ悗锛屽畠浼氳褰曚笅鎵€鏈塖QL璇彞锛屼絾鏄敱浜庤鎿嶄綔姣旇緝鑰楄垂鎬ц兘锛屽洜姝わ紝鍙缓璁湪寮€鍙戠幆澧冧复鏃舵墦寮€璇ラ€夐」銆?
+鏌ョ湅鍏ㄥ眬鏌ヨ鏃ュ織鍛戒护锛?
+```sql
+mysql> show variables like '%general_log%';
++------------------+------------------------------------+
+| Variable_name    | Value                              |
++------------------+------------------------------------+
+| general_log      | OFF                                |
+| general_log_file | /var/lib/mysql/DESKTOP-Q5J25HR.log |
++------------------+------------------------------------+
+2 rows in set (0.01 sec)
+```
+鎵撳紑鍏ㄥ眬鏌ヨ鏃ュ織閫夐」锛?
+```sql
+set global general_log = on;
+```
+鍐嶆鏌ヨ锛?
+```sql
+mysql> show variables like '%general_log%';
++------------------+------------------------------------+
+| Variable_name    | Value                              |
++------------------+------------------------------------+
+| general_log      | ON                                 |
+| general_log_file | /var/lib/mysql/DESKTOP-Q5J25HR.log |
++------------------+------------------------------------+
+2 rows in set (0.00 sec)
+```
+璁剧疆瀹屼互涓婁箣鍚庯紝杩橀渶瑕佸仛濡備笅璁剧疆锛?
+```sql
+set global log_output = 'table';
+```
+鍚屾牱鐨勶紝鍑嗗浠ヤ笅SQL锛?
+```sql
+select * from test01;
+select id, name from test01 where id = 1;
+```
+鍏ㄥ眬鏌ヨ鏃ュ織璁板綍鍦╜mysql.general_log`琛ㄤ腑銆?
+```sql
+mysql> select * from mysql.general_log;
++----------------------------+---------------------------+-----------+-----------+--------------+------------------------------------------+
+| event_time                 | user_host                 | thread_id | server_id | command_type | argument
+          |
++----------------------------+---------------------------+-----------+-----------+--------------+------------------------------------------+
+| 2020-03-31 22:31:24.750895 | root[root] @ localhost [] |         6 |         0 | Query        | select * from test01
+          |
+| 2020-03-31 22:31:26.128924 | root[root] @ localhost [] |         6 |         0 | Query        | select id, name from test01 whe
+re id = 1 |
+| 2020-03-31 22:32:15.736558 | root[root] @ localhost [] |         6 |         0 | Query        | select * from mysql.general_log
+          |
++----------------------------+---------------------------+-----------+-----------+--------------+--------------------------------
+----------+
+3 rows in set (0.01 sec)
+```
+鏃㈢劧鏈夎褰曞埌琛ㄤ腑锛岃嚜鐒朵篃鏈夎褰曞埌鏂囦欢涓紝鍙渶瑕佸仛濡備笅璁剧疆锛?
+```
+set global general_log_file = '/tmp/mysql_general.log';		--璁剧疆鏂囦欢璺緞
+set global log_output = 'file';	--璁剧疆璁板綍鍒版枃浠?
+```
+鍙€氳繃濡備笅鍛戒护鏌ョ湅鏂囦欢璺緞锛?
+```sql
+mysql> show variables like '%general_log%';
++------------------+------------------------+
+| Variable_name    | Value                  |
++------------------+------------------------+
+| general_log      | ON                     |
+| general_log_file | /tmp/mysql_general.log |
++------------------+------------------------+
+2 rows in set (0.00 sec)
+```
+鍚屾牱鎵ц浠ヤ笂涓ゆ潯SQL锛?
+```sql
+select * from test01;
+select id, name from test01 where id = 1;
+```
+鏌ョ湅鏂囦欢鍐呭锛屽緱鍒板涓嬬粨鏋滐細
